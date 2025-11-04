@@ -1,6 +1,6 @@
 version: 2
 models:
-- name: gold_marketing_campaign_stats
+- name: silver_marketing_campaign_stats
   columns:
   - name: campaign_id
     data_tests:
