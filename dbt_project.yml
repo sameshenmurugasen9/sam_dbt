@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'my_new_project'
+name: 'marketing_project'
 version: '1.0.0'
 config-version: 2
 
@@ -36,7 +36,48 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 models:
-  my_new_project:
-    # Applies to all files under models/example/
-    example:
+  +copy_grants: true
+  +sql_header: "alter session set timezone = 'UTC';"
+  +persist_docs:
+    relation: true
+    columns: true
+  marketing_project:
+    2_bronze:
       +materialized: table
+      +tags: bronze
+      +docs:
+        node_color: "#CD7F32"
+      meta:
+        +tags: meta
+        +description: "ad data from meta"
+        +schema: bronze_meta
+      tiktok:
+        +tags: tiktok
+        +description: "ad data from tiktok"
+        +schema: bronze_tiktok
+      google:
+        +tags: google
+        +description: "ad data from google"
+        +schema: bronze_google     
+      calendar:
+        +schema: bronze_calendar
+
+    3_silver:
+      +materialized: table
+      +tags: silver
+      +docs:
+        node_color: "#8A8A8A"
+      tiktok:
+        +schema: silver_tiktok
+      meta:
+        +schema: silver_meta
+      google:
+        +schema: silver_google
+
+    4_gold:
+      +materialized: table
+      +tags: gold
+      +docs:
+        node_color: "#FFD700"
+      marketing:
+        +schema: gold_marketing
